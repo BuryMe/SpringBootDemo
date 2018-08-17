@@ -1,4 +1,4 @@
-package com.example.cache.redis;
+package com.example.config.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -189,7 +189,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean("redisTemplate")
     @ConditionalOnMissingBean
     public RedisTemplate<String, Object> redisTemplate(@Qualifier(value = "jedisConnectionFactory") RedisConnectionFactory redisConnectionFactory) {
-        log.info("初始化redisTemplate");
+        log.info("redisTemplate初始化开始");
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         //key值序列化
@@ -205,6 +205,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.afterPropertiesSet();
         this.redisConnectionFactory = redisConnectionFactory;
+        log.info("redisTemplate初始化结束");
         return redisTemplate;
     }
 
@@ -221,6 +222,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     @ConditionalOnMissingBean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
+        log.info("RedisCacheManager初始化开始");
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
         //不缓存空值
         configuration.disableCachingNullValues();
@@ -239,6 +241,7 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .initialCacheNames(cacheNames)
                 .withInitialCacheConfigurations(cacheConfidMap)
                 .build();
+        log.info("RedisCacheManager初始化结束");
         return redisCacheManager;
     }
 
