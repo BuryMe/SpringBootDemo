@@ -5,7 +5,11 @@ import com.example.constant.ExpectCode;
 import com.example.domain.common.ResultJson;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 
 import javax.servlet.*;
@@ -23,6 +27,8 @@ import java.io.PrintWriter;
 @Slf4j
 @Order(value = 1)
 @WebFilter(urlPatterns = "*.web",filterName = "demo")
+//@ConfigurationProperties(prefix = )
+//@PropertySource("/filterUrl.properties")
 public class DemoFilter implements Filter {
 
     private static final String CONTEXT_PATH = "/demo/";
