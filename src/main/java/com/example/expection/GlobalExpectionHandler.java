@@ -41,12 +41,5 @@ public class GlobalExpectionHandler {
         result.put("resMag","系统异常");
         return result;
     }
-//    @ExceptionHandler(HttpClientErrorException.class)
-//    @ResponseBody
-//    public Map<String,Object> HttpExpectionHandler(){
-//        Map<String,Object> result = new HashMap<>(3);
-//        result.put("resCode","404");
-//        result.put("resMsg","网络波动，请稍后再试");
-//        return result;
-//    }
+
 }
