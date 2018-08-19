@@ -16,7 +16,7 @@ public class RedisServiceImpl implements RedisService {
     /**
      * 默认存储时间为30分钟
      */
-    private Long DEAULT_TIME = 30L;
+    private static final Long DEAULT_TIME = 30L;
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
@@ -49,11 +49,11 @@ public class RedisServiceImpl implements RedisService {
         return redisTemplate.hasKey(key);
     }
 
-    public Long getDEAULT_TIME() {
-        return DEAULT_TIME;
-    }
-
-    public void setDEAULT_TIME(Long DEAULT_TIME) {
-        this.DEAULT_TIME = DEAULT_TIME;
-    }
+//    public Long getDEAULT_TIME() {
+//        return DEAULT_TIME;
+//    }
+//
+//    public void setDEAULT_TIME(Long DEAULT_TIME) {
+//        this.DEAULT_TIME = DEAULT_TIME;
+//    }
 }
