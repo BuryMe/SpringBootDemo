@@ -35,8 +35,30 @@
     <include refid="Base_Column_List" />
     from user_info
     where user_id = #{userId,jdbcType=BIGINT}
-      and user_name = #{userName,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+      *
+    FROM
+      user_info
+    WHERE
+      1=1
+    AND user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    SELECT
+      *
+    FROM
+      user_info
+    WHERE
+     1=1
+    AND user_id = #{userId}
+
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="com.example.domain.mybatis.UserInfoKey">
     <!--
       WARNING - @mbggenerated
@@ -166,4 +188,7 @@
     where user_id = #{userId,jdbcType=BIGINT}
       and user_name = #{userName,jdbcType=VARCHAR}
   </update>
+
+
+
 </mapper>

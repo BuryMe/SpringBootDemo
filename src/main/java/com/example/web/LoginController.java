@@ -48,11 +48,10 @@ public class LoginController {
 //        return resMap;
 //    }
 
-    @RequestMapping("/userLogin")
+    @RequestMapping("userLogin")
     public ResultJson login(HttpServletRequest request){
         ResultJson resultJson = new ResultJson();
         log.info("用户登录开始");
-        Map<String,Object> resMap = new HashMap<>(2);
         try{
             String userName = request.getParameter("userName");
             String userPwd = request.getParameter("userPwd");
@@ -68,6 +67,22 @@ public class LoginController {
         }catch (Exception e){
             resultJson.setCode(ExpectCode.EXPEXTION_NORMAL);
             resultJson.setMsg("登录异常");
+        }
+        return resultJson;
+    }
+
+    @RequestMapping("register")
+    public ResultJson register (UserInfo userInfo){
+        log.info("用户注册操作开始");
+        ResultJson resultJson = new ResultJson();
+        try{
+            loginService.registerInfo(userInfo);
+        }catch (BussinessExpection e){
+            resultJson.setCode(e.getCode());
+            resultJson.setMsg(e.getMsg());
+        }catch (Exception e){
+            resultJson.setCode(ExpectCode.EXPEXTION_NORMAL);
+            resultJson.setMsg("注册异常");
         }
         return resultJson;
     }

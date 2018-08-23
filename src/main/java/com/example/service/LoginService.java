@@ -14,8 +14,15 @@ public interface LoginService {
      * @param userInfo
      * @return
      */
-    public void verifyLoginInfo(UserInfo userInfo)throws BussinessExpection
-    ;
+    public void verifyLoginInfo(UserInfo userInfo)throws BussinessExpection;
 
+    /**
+     * 用户注册
+     * @param userInfo
+     * @throws BussinessExpection
+     */
+    public void registerInfo(UserInfo userInfo)throws BussinessExpection;
+
+    public UserInfo selectByUserId(Long userId)throws BussinessExpection;
 
 }

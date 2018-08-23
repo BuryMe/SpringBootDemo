@@ -53,4 +53,20 @@ public interface UserInfoMapper {
      * @mbggenerated Wed Jul 04 21:33:08 CST 2018
      */
     int updateByPrimaryKey(UserInfo record);
+
+
+    /**
+     * 根据用户名查找用户信息
+     * @param userName
+     * @return
+     */
+    UserInfo selectByUserName(String userName);
+
+    /**
+     * 根据ID查找用户信息
+     * @param userId
+     * @return
+     */
+    UserInfo selectByUserId(Long userId);
+
 }

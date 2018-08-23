@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Created by constanting on 2018/7/4.
  */
@@ -43,5 +46,56 @@ public class LoginServiceImpl implements LoginService{
         if(loginPwd.equals(userPwd)){
             log.info("登录成功");
         }
+    }
+
+    @Override
+    public void registerInfo(UserInfo userInfo) throws BussinessExpection {
+        log.info("开始进行用户注册");
+        String loginName = userInfo.getUserName();
+        String loginPwd = userInfo.getUserPwd();
+        if(null == loginName || "".equals(loginName)){
+            log.error("注册用户名为空");
+            throw new BussinessExpection("100002","注册用户名为空");
+        }
+        if(null == loginPwd || "".equals(loginPwd)){
+            log.error("注册登录密码为空");
+            throw new BussinessExpection("100003","注册登录密码为空");
+        }
+        //验证登录名是否重复
+        UserInfo userInfo1 = null;
+        try{
+            userInfo1 = userInfoMapper.selectByUserName(loginName);
+        }catch (Exception e){
+            throw new BussinessExpection("999999","查询用户信息异常");
+        }
+        if( null != userInfo1){
+            log.info("用户名重复，请更换用户名");
+            throw new BussinessExpection("100004","用户名已存在，请更换");
+        }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String localDateTimeStr = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HHmmss"));
+        userInfo.setUserRegTime(localDateTimeStr);
+        //用户注册默认为0级表示为普通用户
+        userInfo.setUserClass("0");
+        //用户状态00表示为可用状态(默认)
+        userInfo.setUserState("00");
+        int result= userInfoMapper.insert(userInfo);
+        if(result != 1){
+            throw new BussinessExpection("100005","用户注册失败，请稍后再试");
+        }
+    }
+
+    @Override
+    public UserInfo selectByUserId(Long userId) throws BussinessExpection {
+        UserInfo userInfo = new UserInfo();
+        try{
+            userInfo = userInfoMapper.selectByUserId(userId);
+            if(null == userInfo){
+                throw new BussinessExpection("100007","用户不存在");
+            }
+        }catch (Exception e){
+            throw new BussinessExpection("100006","查询用户信息异常");
+        }
+        return userInfo;
     }
 }
